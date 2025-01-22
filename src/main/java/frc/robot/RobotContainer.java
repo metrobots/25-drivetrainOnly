@@ -16,7 +16,6 @@ public class RobotContainer {
 
     // The robot's subsystems
     private final Drivetrain drivetrain = new Drivetrain(); // Drivetrain Subsystem
-    // private final Vision vision = new Vision(drivetrain); // Vision Subsystem
 
     // The driver's controller
     public static final CommandXboxController primary = new CommandXboxController(OIConstants.primaryPort);
