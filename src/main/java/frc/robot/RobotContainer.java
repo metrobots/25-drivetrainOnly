@@ -31,6 +31,7 @@ public class RobotContainer {
         registerNamedCommands();
 
         autoChooser = AutoBuilder.buildAutoChooser();
+        
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
         // Configure the button bindings
@@ -46,7 +47,7 @@ public class RobotContainer {
                     double rot = -MathUtil.applyDeadband(primary.getRightX(), OIConstants.driveDeadband);
 
                     // Apply slow factor if B button is pressed
-                    if (primary.b().getAsBoolean()) {  // Fixed: Use b().getAsBoolean() instead of getBButton()
+                    if (primary.b().getAsBoolean()) {
                         ySpeed *= slowFactor;
                         xSpeed *= slowFactor;
                         rot *= slowFactor;
@@ -63,8 +64,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Example of how to bind a button to a command using the new command-based framework
-        //primary.a()
-        //     .whileTrue(new ExampleCommand());
+        //primary.a().whileTrue(new ExampleCommand());
     }
 
     private void registerNamedCommands() {
@@ -77,27 +77,5 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
-    }
-
-    /**
-     * This method is called when the autonomous period begins.
-     * Start flashing the lights blue here.
-     */
-    public void autonomousInit() {
-        // Start flashing blue during autonomous
-    }
-
-    /**
-     * This method is called periodically during the autonomous period.
-     * Keep calling the flashing method to update the lights.
-     */
-    public void autonomousPeriodic() {
-        // Ensure flashing is updated periodically during autonomous
-    }
-
-    /**
-     * Stop the flashing or lights when teleop starts.
-     */
-    public void teleopInit() {
     }
 }
