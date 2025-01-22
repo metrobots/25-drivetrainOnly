@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.utils.Constants.OIConstants;
 
 public class RobotContainer {
