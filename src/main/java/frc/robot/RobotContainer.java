@@ -28,16 +28,14 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-
-        registerNamedCommands();
-
-        autoChooser = AutoBuilder.buildAutoChooser();
+        // Create the auto chooser with a default auto
+        autoChooser = AutoBuilder.buildAutoChooser("Default Auto");
         
         SmartDashboard.putData("Auto Chooser", autoChooser);
-
+    
         // Configure the button bindings
         configureButtonBindings();
-
+    
         // Configure default commands
         drivetrain.setDefaultCommand(
             new RunCommand(
@@ -46,19 +44,18 @@ public class RobotContainer {
                     double ySpeed = -MathUtil.applyDeadband(primary.getLeftY(), OIConstants.driveDeadband);
                     double xSpeed = -MathUtil.applyDeadband(primary.getLeftX(), OIConstants.driveDeadband);
                     double rot = -MathUtil.applyDeadband(primary.getRightX(), OIConstants.driveDeadband);
-
+    
                     // Apply slow factor if B button is pressed
                     if (primary.b().getAsBoolean()) {
                         ySpeed *= slowFactor;
                         xSpeed *= slowFactor;
                         rot *= slowFactor;
                     }
-
+    
                     drivetrain.drive(ySpeed, xSpeed, rot, true);
                 },
                 drivetrain));
     }
-
     /**
      * Use this method to define your button->command mappings. Buttons can be
      * created by instantiating a {@link Trigger} class.
@@ -68,8 +65,6 @@ public class RobotContainer {
         //primary.a().whileTrue(new ExampleCommand());
     }
 
-    private void registerNamedCommands() {
-    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
