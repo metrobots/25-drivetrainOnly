@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants.DriveConstants;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -113,6 +114,11 @@ public class Drivetrain extends SubsystemBase {
             rearLeft.getPosition(),
             rearRight.getPosition()
         });
+
+    SmartDashboard.putNumber("Front Left",frontLeft.getAngle());
+    SmartDashboard.putNumber("Front Right", frontRight.getAngle());
+    SmartDashboard.putNumber("Rear Left", rearLeft.getAngle());
+    SmartDashboard.putNumber("Rear Right", rearRight.getAngle());
   }
 
   public Pose2d getPose() {
@@ -199,4 +205,5 @@ public class Drivetrain extends SubsystemBase {
   public double getTurnRate() {
     return gyro.getRate() * (DriveConstants.gyroReversed ? -1.0 : 1.0);
   }
+
 }
