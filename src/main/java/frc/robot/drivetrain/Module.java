@@ -112,6 +112,10 @@ public class Module {
     drivingEncoder.setPosition(0);
   }
 
+    /**
+   * WHAT DO YOU THINK THIS DOES IT SHOWS THE ANGLE
+   * @return THE DAMN ANGLE
+   */
   public double getAngle() {
     return turningEncoder.get();
   }

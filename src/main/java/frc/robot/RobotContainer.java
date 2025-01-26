@@ -1,7 +1,10 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -9,9 +12,16 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.utils.Constants.DriveConstants;
 import frc.robot.utils.Constants.OIConstants;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
 
 public class RobotContainer {
+    private final SendableChooser<Command> autoChooser;
 
     // The robot's subsystems
     private final Drivetrain drivetrain = new Drivetrain(); // Drivetrain Subsystem
@@ -26,6 +36,11 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        
+        // Build auto chooser
+        autoChooser = AutoBuilder.buildAutoChooser();
+
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     
         // Configure the button bindings
         configureButtonBindings();
@@ -50,6 +65,7 @@ public class RobotContainer {
                 },
                 drivetrain));
     }
+
     /**
      * Use this method to define your button->command mappings. Buttons can be
      * created by instantiating a {@link Trigger} class.
@@ -59,13 +75,12 @@ public class RobotContainer {
         //primary.a().whileTrue(new ExampleCommand());
     }
 
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return autoChooser.getSelected();
     }
 }

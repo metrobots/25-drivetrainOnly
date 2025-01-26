@@ -91,6 +91,39 @@ public class Drivetrain extends SubsystemBase {
     );
   }
 
+  public void configAuto() {
+    RobotConfig config;
+    try {
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return;
+    }
+
+    //Configure AutoBuilder last
+    AutoBuilder.configure(
+        this::getPose, //Robot pose supplier
+        this::resetOdometry, //Method to reset odometry
+        this::getRobotRelativeSpeeds, //ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        (speeds, feedforwards) -> driveRobotRelative(speeds), //Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        new PPHolonomicDriveController(
+            new PIDConstants(5.0, 0.0, 0.0), //Translation PID constants
+            new PIDConstants(5.0, 0.0, 0.0) //Rotation PID constants
+        ),
+        config, //The robot configuration
+        () -> {
+          //Boolean supplier that controls when the path will be mirrored for the red alliance
+          var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+          }
+          return false;
+        },
+        this //Reference to this subsystem to set requirements
+    );
+  }
+
+
   private ChassisSpeeds getRobotRelativeSpeeds() {
     return DriveConstants.kDriveKinematics.toChassisSpeeds(
         frontLeft.getState(),
@@ -114,6 +147,7 @@ public class Drivetrain extends SubsystemBase {
             rearLeft.getPosition(),
             rearRight.getPosition()
         });
+
 
     SmartDashboard.putNumber("Front Left",frontLeft.getAngle());
     SmartDashboard.putNumber("Front Right", frontRight.getAngle());
